@@ -1,0 +1,85 @@
+/* Basic Reset */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #ff6600;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.wallet-info, .bet-history {
+    margin: 10px;
+    font-size: 18px;
+}
+
+/* Game Info */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    font-size: 18px;
+}
+
+/* Bet Input */
+input {
+    padding: 10px;
+    width: 200px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+/* Bet Buttons */
+.bet-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+}
+
+.green { background-color: #28a745; }
+.violet { background-color: #6f42c1; }
+.red { background-color: #dc3545; }
+
+/* Bet History */
+.bet-history {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.bet-list {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.bet {
+    padding: 8px;
+    font-size: 14px;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    text-align: center;
+}
+
+.green { background-color: #28a745; }
+.violet { background-color: #6f42c1; }
+.red { background-color: #dc3545; }

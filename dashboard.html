@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Trading - BettingHub</title>
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { getDoc, setDoc, updateDoc, doc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+        let timer = 30;
+        let totalBets = 0;
+        let betHistory = [];
+        let walletBalance = 100;
+        let totalWins = 0;
+        let totalLosses = 0;
+        let currentBet = null;
+        let userId = null;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                await loadUserData(userId);
+            } else {
+                window.location.href = "login.html"; // Redirect if not logged in
+            }
+        });
+
+        async function loadUserData(userId) {
+            const userRef = doc(db, "wallets", userId);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists()) {
+                const userData = userSnap.data();
+                walletBalance = userData.balance || 100;
+                totalWins = userData.wins || 0;
+                totalLosses = userData.losses || 0;
+            } else {
+                await setDoc(userRef, { balance: 100, wins: 0, losses: 0 });
+            }
+
+            updateUI();
+        }
+
+        async function updateWalletBalance(userId, amount) {
+            const userRef = doc(db, "wallets", userId);
+            await updateDoc(userRef, { balance: amount });
+            document.getElementById("walletBalance").textContent = amount;
+        }
+
+        async function updateWinLoss(userId) {
+            const userRef = doc(db, "wallets", userId);
+            await updateDoc(userRef, { wins: totalWins, losses: totalLosses });
+            document.getElementById("winCount").textContent = totalWins;
+            document.getElementById("lossCount").textContent = totalLosses;
+        }
+
+        async function placeBet(amount, betType) {
+            if (walletBalance < amount) {
+                alert("Not enough coins to bet!");
+                return;
+            }
+
+            walletBalance -= amount;
+            await updateWalletBalance(userId, walletBalance);
+
+            await addDoc(collection(db, "bets"), {
+                userId: userId,
+                amount: amount,
+                betType: betType,
+                timestamp: new Date()
+            });
+
+            totalBets++;
+            document.getElementById("totalBets").textContent = totalBets;
+            currentBet = betType;
+        }
+
+        function startTimer() {
+            let countdown = setInterval(() => {
+                timer--;
+                document.getElementById("timer").textContent = timer;
+
+                if (timer === 0) {
+                    clearInterval(countdown);
+                    checkBetResult();
+                    timer = 30;
+                    startTimer();
+                }
+            }, 1000);
+        }
+
+        async function checkBetResult() {
+            let result = Math.random() < 0.5 ? "UP" : "DOWN";
+            document.getElementById("lastResult").textContent = result;
+            betHistory.unshift(result);
+            if (betHistory.length > 5) betHistory.pop();
+            updateHistory();
+
+            if (currentBet) {
+                if (currentBet === result) {
+                    walletBalance += 20;
+                    totalWins++;
+                } else {
+                    totalLosses++;
+                }
+                await updateWalletBalance(userId, walletBalance);
+                await updateWinLoss(userId);
+                currentBet = null;
+            }
+
+            updateUI();
+        }
+
+        function updateHistory() {
+            let historyList = document.getElementById("historyList");
+            historyList.innerHTML = "";
+            betHistory.forEach(bet => {
+                let li = document.createElement("li");
+                li.textContent = `Result: ${bet}`;
+                historyList.appendChild(li);
+            });
+        }
+
+        function updateUI() {
+            document.getElementById("walletBalance").textContent = walletBalance;
+            document.getElementById("winCount").textContent = totalWins;
+            document.getElementById("lossCount").textContent = totalLosses;
+        }
+
+        document.getElementById("betUp").addEventListener("click", () => placeBet(10, "UP"));
+        document.getElementById("betDown").addEventListener("click", () => placeBet(10, "DOWN"));
+
+        startTimer();
+    </script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+        .wallet {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #00ffcc;
+        }
+        .timer {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff4444;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 45%;
+            padding: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .up {
+            background: #27ae60;
+            color: #fff;
+        }
+        .down {
+            background: #c0392b;
+            color: #fff;
+        }
+        .up:hover {
+            background: #2ecc71;
+        }
+        .down:hover {
+            background: #e74c3c;
+        }
+        .stats {
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        .bet-history {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .bet-history ul {
+            list-style: none;
+            padding: 0;
+        }
+        .bet-history li {
+            background: #333;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Color Trading Game</h2>
+
+        <div class="wallet">
+            <strong>Wallet Balance:</strong> <span id="walletBalance">100</span> Coins
+        </div>
+
+        <div class="timer" id="timer">30</div>
+
+        <div class="buttons">
+            <button class="up" id="betUp">BET UP (-10 Coins)</button>
+            <button class="down" id="betDown">BET DOWN (-10 Coins)</button>
+        </div>
+
+        <div class="stats">
+            <p><strong>Total Bets:</strong> <span id="totalBets">0</span></p>
+            <p><strong>Last Result:</strong> <span id="lastResult">-</span></p>
+            <p><strong>Wins:</strong> <span id="winCount">0</span></p>
+            <p><strong>Losses:</strong> <span id="lossCount">0</span></p>
+        </div>
+
+        <div class="bet-history">
+            <h3>Bet History</h3>
+            <ul id="historyList">
+                <li>No Bets Yet</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

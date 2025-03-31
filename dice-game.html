@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game - BettingHub</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+
+        /* Dice Container */
+        .dice-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dice Image */
+        .dice {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Roll Button */
+        .roll-btn {
+            background: #ff6600;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .roll-btn:hover {
+            background: #ffcc00;
+            color: black;
+        }
+
+        /* Result */
+        .result {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎲 Roll the Dice 🎲</h1>
+    <div class="dice-container">
+        <img id="diceImage" src="dice-1.png" alt="Dice" class="dice">
+        <button class="roll-btn" onclick="rollDice()">Roll Dice</button>
+        <p class="result" id="resultText">Click to Roll!</p>
+    </div>
+
+    <script>
+        function rollDice() {
+            const diceImage = document.getElementById("diceImage");
+            const resultText = document.getElementById("resultText");
+            
+            // Random Dice Number (1 to 6)
+            const diceNumber = Math.floor(Math.random() * 6) + 1;
+
+            // Dice Images with Names
+            const diceImages = {
+                1: "dice-1.png",
+                2: "dice-2.png",
+                3: "dice-3.png",
+                4: "dice-4.png",
+                5: "image copy.png",
+                6: "image.png"
+            };
+
+            // Update Dice Image
+            diceImage.src = diceImages[diceNumber];
+
+            // Add Rolling Animation
+            diceImage.style.transform = "rotate(360deg)";
+            setTimeout(() => {
+                diceImage.style.transform = "rotate(0deg)";
+            }, 300);
+
+            // Show Result
+            resultText.textContent = `You rolled a ${diceNumber}!`;
+        }
+    </script>
+</body>
+</html>

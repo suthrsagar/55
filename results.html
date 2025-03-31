@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Game Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+        }
+        #resultContainer {
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 400px;
+            background: #333;
+        }
+        button {
+            background: #ff9900;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #ff6600;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎨 Color Game Results</h1>
+    <div id="resultContainer"></div>
+    <button id="loadMoreBtn" style="display: none;">Load More Results</button>
+
+    <script type="module" src="results.js"></script>
+</body>
+</html>

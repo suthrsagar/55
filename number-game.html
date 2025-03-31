@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Betting Game</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6600;
+        }
+        .number-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .number-button {
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            background: #ff6600;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔢 Number Betting Game 🔢</h1>
+    <h3>Select a number and place your bet</h3>
+    <div class="number-container">
+        <button class="number-button" onclick="placeBet(1)">1</button>
+        <button class="number-button" onclick="placeBet(2)">2</button>
+        <button class="number-button" onclick="placeBet(3)">3</button>
+        <button class="number-button" onclick="placeBet(4)">4</button>
+    </div>
+
+    <script>
+        function placeBet(number) {
+            alert(`You placed a bet on number ${number}!`);
+        }
+    </script>
+</body>
+</html>

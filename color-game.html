@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Betting Game</title>
+    <script type="module" src="wallet.js"></script> <!-- Wallet System -->
+    <script type="module" src="game.js"></script> <!-- Game Logic -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { color: #ff6600; }
+        .game-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .bet-button { padding: 15px; font-size: 16px; border: none; cursor: pointer; border-radius: 5px; color: white; }
+        .green { background-color: #28a745; }
+        .red { background-color: #dc3545; }
+        .violet { background-color: #6f42c1; }
+        #timer { font-size: 24px; font-weight: bold; margin-top: 20px; color: #333; }
+        #resultContainer { margin-top: 30px; font-size: 18px; }
+        .wallet { margin-top: 20px; font-size: 18px; }
+        .wallet button { margin: 5px; padding: 10px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Color Betting Game 🎨</h1>
+    <h3>Choose a color and place your bet</h3>
+
+    <!-- 🔥 Wallet System -->
+    <div class="wallet">
+        <h2>💰 Wallet Balance: ₹<span id="walletBalance">Loading...</span></h2>
+        <button onclick="addMoney()">➕ Add ₹500</button>
+        <button onclick="withdrawMoney()">➖ Withdraw ₹500</button>
+    </div>
+
+    <div id="timer">Loading...</div> <!-- ⏳ Timer -->
+    
+    <div class="game-container">
+        <button class="bet-button green" onclick="placeBet('Green')">Green ₹100</button>
+        <button class="bet-button violet" onclick="placeBet('Violet')">Violet ₹100</button>
+        <button class="bet-button red" onclick="placeBet('Red')">Red ₹100</button>
+    </div>
+
+    <div id="resultContainer"></div> <!-- 🎯 Result History -->
+    <button id="loadMoreBtn" style="display: none;" onclick="loadMoreResults()">More Results</button>
+</body>
+</html>

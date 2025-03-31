@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin Wheel Game</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6600;
+        }
+        .wheel-container {
+            margin-top: 20px;
+        }
+        .spin-button {
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            background: #ff6600;
+            color: white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎡 Spin Wheel Game 🎡</h1>
+    <h3>Click the button to spin the wheel</h3>
+    <div class="wheel-container">
+        <button class="spin-button" onclick="spinWheel()">Spin</button>
+    </div>
+
+    <script>
+        function spinWheel() {
+            const prize = ["₹10", "₹50", "₹100", "₹500", "₹1000"];
+            const randomPrize = prize[Math.floor(Math.random() * prize.length)];
+            alert(`You won ${randomPrize}!`);
+        }
+    </script>
+</body>
+</html>

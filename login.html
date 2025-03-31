@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,49 +19,47 @@
         .container {
             max-width: 400px;
             padding: 30px;
-            background: #1e1e1e;
+            background: #fff;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         h2 {
-            color: #ffcc00;
+            color: #ff6600;
             margin-bottom: 20px;
         }
         input {
             width: 90%;
             padding: 10px;
             margin: 10px 0;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            background: #333;
-            color: #fff;
         }
         button {
             width: 100%;
             padding: 10px;
-            background: #ffcc00;
+            background: #ff6600;
             border: none;
             border-radius: 5px;
             font-weight: bold;
-            color: #121212;
+            color: white;
             cursor: pointer;
             transition: 0.3s;
         }
         button:hover {
-            background: #ffffff;
+            background: #cc5500;
         }
         .link {
             margin-top: 15px;
-            color: #ffcc00;
+            color: #ff6600;
         }
         .link a {
-            color: #ffcc00;
+            color: #ff6600;
             text-decoration: none;
             font-weight: bold;
         }
         .link a:hover {
-            color: #ffffff;
+            color: #cc5500;
         }
     </style>
 </head>
@@ -90,7 +88,7 @@
             signInWithEmailAndPassword(auth, email, password)
                 .then(() => {
                     alert("Login Successful!");
-                    window.location.href = "dashboard.html";
+                    window.location.href = "game.html"; // ✅ Login के बाद game.html खुलेगा
                 })
                 .catch((error) => {
                     alert("Error: " + error.message);
